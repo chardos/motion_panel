@@ -1,5 +1,7 @@
 module Mixpanel
   class EventManager
+    include SixtyFour
+
     def initialize(token)
       @token = token
     end
@@ -41,10 +43,6 @@ module Mixpanel
         }.merge(params).merge(Mixpanel.default_hash)
       }
       BW::JSON.generate(hash)
-    end
-
-    def encode_64(json)
-      CGI.escape([json].pack('m'))
     end
   end
 end

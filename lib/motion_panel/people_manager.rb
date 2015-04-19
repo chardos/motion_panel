@@ -1,5 +1,7 @@
 module Mixpanel
   class PeopleManager
+    include SixtyFour
+
     attr_accessor :token
 
     def initialize(token)
@@ -40,10 +42,6 @@ module Mixpanel
         action => add_default_hash ? params.merge(Mixpanel.default_hash) : params
       }
       BW::JSON.generate(hash)
-    end
-
-    def encode_64(json)
-      CGI.escape([json].pack('m'))
     end
   end
 end
