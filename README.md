@@ -34,8 +34,9 @@ Mixpanel.shared_instance
 You can then use the shared instance to track events:
 
 ```ruby
-Mixpanel.shared_instance.track('Example event', attribute: 'Value', second_attribute: 'Second value')
+Mixpanel.shared_instance.track('Example event', 'attribute' => 'Value', 'second_attribute' => 'Second value')
 ```
+If you wish to include a custom user distinct_id to the event, you can include a 'distinct_id' value in the options.
 
 The following attributes will be included by default for every call:
 - app_version
@@ -43,6 +44,8 @@ The following attributes will be included by default for every call:
 - orientation
 - resolution
 - retina?
+
+
 
 ## Tracking people
 A person is Mixpanel is defined by a distinct_id. You have the option to pass this as part of the options hash in every people method. A universally unique vendor string will be used if this key is ommitted.

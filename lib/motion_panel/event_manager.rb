@@ -1,6 +1,7 @@
 module Mixpanel
   class EventManager
     include SixtyFour
+    include VendorString
 
     def initialize(token)
       @token = token
@@ -8,6 +9,7 @@ module Mixpanel
 
     def track(event_name, params = {})
       return false unless config.should_track?
+      puts "EVENT JSON: #{event_json(event_name, params)}"
       data = encode_64(event_json(event_name, params))
       url = "http://api.mixpanel.com/track/?data=#{data}"
       AFMotion::JSON.get(url) do |result|
@@ -17,12 +19,6 @@ module Mixpanel
 
     def people
       people_manager
-    end
-
-    def set_person(distinct_id, params = {})
-      puts '## Set person is depreciated, please use people.set'
-      return false unless config.should_track?
-      people_manager.set(distinct_id, params)
     end
 
     private
@@ -36,9 +32,11 @@ module Mixpanel
     end
 
     def event_json(name, params)
+      distinct_id = params.delete('distinct_id') || default_distinct
       hash = {
         'event' => name,
         'properties' => {
+          'distinct_id' => distinct_id,
           'token' => @token
         }.merge(params).merge(Mixpanel.default_hash)
       }

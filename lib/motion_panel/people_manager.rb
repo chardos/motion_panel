@@ -1,6 +1,7 @@
 module Mixpanel
   class PeopleManager
     include SixtyFour
+    include VendorString
 
     attr_accessor :token
 
@@ -39,10 +40,6 @@ module Mixpanel
     end
 
     private
-
-    def default_distinct
-      Device.vendor_identifier.UUIDString
-    end
 
     def engage_action(distinct_id, params, action, add_default_hash)
       return false unless config.should_track?
