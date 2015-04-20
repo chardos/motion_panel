@@ -69,6 +69,13 @@ The add method will increment numerical values. A great example of this is track
 Mixpanel.shared_instance.people.add(distinct_id, 'Log in count' => 1)
 ```
 
+The append method will allow you to add key value Mixpanel array object.
+
+```ruby
+Mixpanel.shared_instance.people.append(distinct_id, 'Roles' => 'Admin')
+```
+If the array does not exist, it will be created.
+
 ##Config
 Configuration can be changed through the Mixpanel.config object.
 
@@ -79,7 +86,6 @@ Mixpanel.config.disable_in_test # Blocks all calls if app is in the test environ
 ```
 
 ##TODO
-- Block on development and test environment configuration option.
 - Better exceptions.
 - Alternate interface for a better Ruby experience.
 

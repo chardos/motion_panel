@@ -1,5 +1,4 @@
 describe 'Mixpanel::ConfigManager' do
-
   class Device
     class << self
       attr_writer :simulator
@@ -33,7 +32,7 @@ describe 'Mixpanel::ConfigManager' do
     App.test = false
   end
 
-  it "should never be disabled on device unless asked" do
+  it 'should never be disabled on device unless asked' do
     Mixpanel::ConfigManager.should_track?.should == true
   end
 
@@ -57,5 +56,4 @@ describe 'Mixpanel::ConfigManager' do
     Mixpanel::ConfigManager.disable_in_test = true
     Mixpanel::ConfigManager.should_track?.should == false
   end
-
 end

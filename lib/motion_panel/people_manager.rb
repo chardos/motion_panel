@@ -20,6 +20,10 @@ module Mixpanel
       engage_action(distinct_id, params, '$add', false)
     end
 
+    def append(distinct_id, params)
+      engage_action(distinct_id, params, '$append', false)
+    end
+
     private
 
     def engage_action(distinct_id, params, action, add_default_hash)
