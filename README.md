@@ -1,4 +1,4 @@
-# MotionPanel
+# MotionPanel [![Build Status](https://travis-ci.org/tombroomfield/motion_panel.svg?branch=master)](https://travis-ci.org/tombroomfield/motion_panel)
 A native [RubyMotion](http://www.rubymotion.com/) wrapper around the [Mixpanel](https://mixpanel.com/) API.
 
 For updates, find me [here](http://www.tombroomfield.com) or [follow me on twitter](https://twitter.com/tom_broomfield)
