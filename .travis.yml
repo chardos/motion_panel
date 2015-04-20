@@ -14,6 +14,5 @@ cache:
 install:
   - bundle install --jobs=3 --retry=3
   - bundle exec rake clean
-  - bundle exec rake pod:install > /dev/null
 script:
   - bundle exec rake spec output=test_unit
