@@ -45,37 +45,44 @@ The following attributes will be included by default for every call:
 - retina?
 
 ## Tracking people
-Every user must have a distinct_id, this could be a database ID or an email address.
+A person is Mixpanel is defined by a distinct_id. You have the option to pass this as part of the options hash in every people method. A universally unique vendor string will be used if this key is ommitted.
 
 ###Set
 To track a user
 ```ruby
-Mixpanel.shared_instance.people.set(distinct_id, '$first_name' => 'Tom',
-                                                 '$last_name' => 'Broomfield',
-                                                 'occupation' => 'Developer')
+Mixpanel.shared_instance.people.set('$first_name' => 'Tom',
+                                    '$last_name' => 'Broomfield',
+                                    'occupation' => 'Developer')
 
 ```
+
+Remember, if you want to use your own unique identifier for the user profile, remember to include it in a hash.
+
+```ruby
+Mixpanel.shared_instance.people.set('distinct_id' => 21,
+                                    '$first_name' => 'Tom',
+                                    '$last_name' => 'Broomfield',
+                                    'occupation' => 'Developer')
+```
+
 Please be aware that the properties with the '$' prefix are special Mixpanel attributes. Refer to the Mixpanel documentation for more information.
 
 ###Set Once
 You can also use the set_once method. This will work in the same way to the set method, except it will not overwrite existing property values. This is useful for properties like "First login date".
-
 ```ruby
-Mixpanel.shared_instance.people.set_once(distinct_id, 'First login' => '19/04/2015')
+Mixpanel.shared_instance.people.set_once('First login' => '19/04/2015')
 ```
 
 ###Add
 The add method will increment numerical values. A great example of this is tracking sign in count.
-
 ```ruby
-Mixpanel.shared_instance.people.add(distinct_id, 'Log in count' => 1)
+Mixpanel.shared_instance.people.add('Log in count' => 1)
 ```
 
 ###Append
 The append method will allow you to add key value Mixpanel array object.
-
 ```ruby
-Mixpanel.shared_instance.people.append(distinct_id, 'Roles' => 'Admin')
+Mixpanel.shared_instance.people.append('Roles' => 'Admin')
 ```
 If the array does not exist, it will be created. Each attribute can be added to the same list multiple times.
 
@@ -83,20 +90,13 @@ If the array does not exist, it will be created. Each attribute can be added to 
 ###Union
 Similar to the add method, this will accept an array of properties for a key and ensure they are added the to list. Unlike the add method, each property will only appear in the list once.
 ```ruby
-Mixpanel.shared_instance.people.union(distinct_id, 'Roles' => ['Admin', 'User'])
-```
-
-###Unset
-This will take a list of property names and remove the attributes for each of them.
-
-```ruby
-Mixpanel.shared_instance.people.unset(distinct_id, ['Days Overdue'])
+Mixpanel.shared_instance.people.union('Roles' => ['Admin', 'User'])
 ```
 
 ###Delete
 Deletes the entire profile from Mixpanel.
 ```ruby
-Mixpanel.shared_instance.people.delete(distinct_id)
+Mixpanel.shared_instance.people.delete!
 ```
 
 ##Config
@@ -110,7 +110,7 @@ Mixpanel.config.disable_in_test # Blocks all calls if app is in the test environ
 
 ##TODO
 - Better exceptions.
-- Alternate interface for a better Ruby experience.
+- Unset method on people.
 
 Feel free to shoot through a PR or open an issue.
 

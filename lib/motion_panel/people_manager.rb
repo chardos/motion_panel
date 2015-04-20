@@ -8,31 +8,41 @@ module Mixpanel
       self.token = token
     end
 
-    def set(distinct_id, params)
+    def set(params = {})
+      distinct_id = params.delete('distinct_id') || default_distinct
       engage_action(distinct_id, params, '$set', true)
     end
 
-    def set_once(distinct_id, params)
+    def set_once(params = {})
+      distinct_id = params.delete('distinct_id') || default_distinct
       engage_action(distinct_id, params, '$set_once', false)
     end
 
-    def add(distinct_id, params)
+    def add(params = {})
+      distinct_id = params.delete('distinct_id') || default_distinct
       engage_action(distinct_id, params, '$add', false)
     end
 
-    def append(distinct_id, params)
+    def append(params = {})
+      distinct_id = params.delete('distinct_id') || default_distinct
       engage_action(distinct_id, params, '$append', false)
     end
 
-    def unset(distinct_id, params)
-      engage_action(distinct_id, params, '$unset', false)
-    end
+    # def unset(params = {})
+    #   distinct_id = params.delete('distinct_id') || default_distinct
+    #   engage_action(distinct_id, params, '$unset', false)
+    # end
 
-    def delete(distinct_id)
+    def delete!(params = {})
+      distinct_id = params.delete('distinct_id') || default_distinct
       engage_action(distinct_id, {}, '$delete', false)
     end
 
     private
+
+    def default_distinct
+      Device.vendor_identifier.UUIDString
+    end
 
     def engage_action(distinct_id, params, action, add_default_hash)
       return false unless config.should_track?
