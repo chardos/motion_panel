@@ -24,6 +24,14 @@ module Mixpanel
       engage_action(distinct_id, params, '$append', false)
     end
 
+    def unset(distinct_id, params)
+      engage_action(distinct_id, params, '$unset', false)
+    end
+
+    def delete(distinct_id)
+      engage_action(distinct_id, {}, '$delete', false)
+    end
+
     private
 
     def engage_action(distinct_id, params, action, add_default_hash)

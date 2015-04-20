@@ -47,8 +47,8 @@ The following attributes will be included by default for every call:
 ## Tracking people
 Every user must have a distinct_id, this could be a database ID or an email address.
 
+###Set
 To track a user
-
 ```ruby
 Mixpanel.shared_instance.people.set(distinct_id, '$first_name' => 'Tom',
                                                  '$last_name' => 'Broomfield',
@@ -57,24 +57,47 @@ Mixpanel.shared_instance.people.set(distinct_id, '$first_name' => 'Tom',
 ```
 Please be aware that the properties with the '$' prefix are special Mixpanel attributes. Refer to the Mixpanel documentation for more information.
 
+###Set Once
 You can also use the set_once method. This will work in the same way to the set method, except it will not overwrite existing property values. This is useful for properties like "First login date".
 
 ```ruby
 Mixpanel.shared_instance.people.set_once(distinct_id, 'First login' => '19/04/2015')
 ```
 
+###Add
 The add method will increment numerical values. A great example of this is tracking sign in count.
 
 ```ruby
 Mixpanel.shared_instance.people.add(distinct_id, 'Log in count' => 1)
 ```
 
+###Append
 The append method will allow you to add key value Mixpanel array object.
 
 ```ruby
 Mixpanel.shared_instance.people.append(distinct_id, 'Roles' => 'Admin')
 ```
-If the array does not exist, it will be created.
+If the array does not exist, it will be created. Each attribute can be added to the same list multiple times.
+
+
+###Union
+Similar to the add method, this will accept an array of properties for a key and ensure they are added the to list. Unlike the add method, each property will only appear in the list once.
+```ruby
+Mixpanel.shared_instance.people.union(distinct_id, 'Roles' => ['Admin', 'User'])
+```
+
+###Unset
+This will take a list of property names and remove the attributes for each of them.
+
+```ruby
+Mixpanel.shared_instance.people.unset(distinct_id, ['Days Overdue'])
+```
+
+###Delete
+Deletes the entire profile from Mixpanel.
+```ruby
+Mixpanel.shared_instance.people.delete(distinct_id)
+```
 
 ##Config
 Configuration can be changed through the Mixpanel.config object.
