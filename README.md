@@ -48,7 +48,7 @@ The following attributes will be included by default for every call:
 
 
 ## Tracking people
-A person is Mixpanel is defined by a distinct_id. You have the option to pass this as part of the options hash in every people method. A universally unique vendor string will be used if this key is ommitted.
+A person in Mixpanel is defined by a distinct_id. You have the option to pass this as part of the options hash in every people method. A universally unique vendor string will be used if this key is omitted.
 
 ###Set
 To track a user
@@ -83,7 +83,7 @@ Mixpanel.shared_instance.people.add('Log in count' => 1)
 ```
 
 ###Append
-The append method will allow you to add key value Mixpanel array object.
+The append method will allow you to add a key value pair to the Mixpanel array object.
 ```ruby
 Mixpanel.shared_instance.people.append('Roles' => 'Admin')
 ```
